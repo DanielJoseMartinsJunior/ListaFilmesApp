@@ -19,6 +19,8 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -37,6 +39,15 @@ fun InsertFilme(
     BackHandler {
         viewModel.navigateBack(navController)
     }
+    val uiState by viewModel.insertFilmeUIState.collectAsState()
+    InsertForm(
+        foto = uiState.foto,
+        nome = uiState.nome,
+        descricao = uiState.descricao,
+        onUpdateFoto = viewModel::onFotoChange,
+        onUpdateNome = viewModel::onNomeChange,
+        onUpdateDescricao = viewModel::onDescricaoChange,
+    )
 }
 
 @Composable
@@ -72,7 +83,7 @@ fun InsertForm(
                     modifier = modifier
                         .size(150.dp)
                         .padding(8.dp)
-                        .background(if(image == foto) Color.LightGray else Color.Transparent),
+                        .background(if (image == foto) Color.LightGray else Color.Transparent),
                     contentAlignment = Alignment.Center
                 ) {
                     Image(

@@ -1,5 +1,6 @@
 package com.example.listafilmesapp.viewmodels
 
+import androidx.annotation.DrawableRes
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.example.listafilmesapp.R
@@ -8,6 +9,7 @@ import com.example.listafilmesapp.models.Filme
 import com.example.listafilmesapp.ui.views.AppScreens
 import com.example.listafilmesapp.ui.views.AppUIState
 import com.example.listafilmesapp.ui.views.FilmeListUIState
+import com.example.listafilmesapp.ui.views.InsertFormUIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,11 +23,20 @@ class FilmeListVewModel : ViewModel(){
     val filmeListUIState: StateFlow<FilmeListUIState> =
         _filmeListUIState.asStateFlow()
 
+    private val _insertFilmeUIState: MutableStateFlow<InsertFormUIState> =
+        MutableStateFlow(InsertFormUIState())
+
+    val insertFilmeUIState: StateFlow<InsertFormUIState> =
+        _insertFilmeUIState.asStateFlow()
+
     private val _appUIState: MutableStateFlow<AppUIState> =
         MutableStateFlow(AppUIState())
 
     val appUIState: StateFlow<AppUIState> =
         _appUIState.asStateFlow()
+
+    private var filme: Filme = Filme()
+    private var editFilme: Boolean =  false
 
     fun navigate(navController: NavController) {
         if(_appUIState.value.title == R.string.lista_de_filmes) {
@@ -41,6 +52,28 @@ class FilmeListVewModel : ViewModel(){
             navController.navigate(AppScreens.InsertFilme.name)
 
         } else{
+
+            if(editFilme) {
+
+            } else {
+                val filmes: MutableList<Filme> = _filmeListUIState.value.filmeList.toMutableList()
+                filmes.add(
+                    Filme(
+                        foto = _insertFilmeUIState.value.foto,
+                        nome = _insertFilmeUIState.value.nome,
+                        descricao = _insertFilmeUIState.value.descricao,
+                    )
+                )
+                _insertFilmeUIState.update {
+                    InsertFormUIState()
+                }
+                _filmeListUIState.update { currentState ->
+                    currentState.copy(
+                        filmeList = filmes.toList()
+                    )
+                }
+
+            }
 
             _appUIState.update {
                 AppUIState()
@@ -68,4 +101,23 @@ class FilmeListVewModel : ViewModel(){
         _filmeListUIState.value = _filmeListUIState.value.copy(
             filmeList = filmes.toList())
     }
+
+    fun onFotoChange(@DrawableRes foto: Int) {
+        _insertFilmeUIState.update { currentState ->
+            currentState.copy(foto = foto)
+        }
+    }
+
+    fun onNomeChange(nome: String) {
+        _insertFilmeUIState.update { currentState ->
+            currentState.copy(nome = nome)
+        }
+    }
+
+    fun onDescricaoChange(descricao: String) {
+        _insertFilmeUIState.update { currentState ->
+            currentState.copy(descricao = descricao)
+        }
+    }
+
 }
