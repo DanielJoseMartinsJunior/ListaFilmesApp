@@ -26,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.example.listafilmesapp.R
 import com.example.listafilmesapp.models.Filme
 import com.example.listafilmesapp.ui.theme.ListaFilmesAppTheme
@@ -34,6 +35,7 @@ import com.example.listafilmesapp.viewmodels.FilmeListVewModel
 @Composable
 fun FilmeList(
     viewModel: FilmeListVewModel,
+    navController: NavController,
     modifier: Modifier = Modifier,
 ) {
 
@@ -43,7 +45,14 @@ fun FilmeList(
         items(uiState.filmeList){ filme ->
             FilmeCard(
                 filme = filme,
-                onDelete = viewModel::deleteFilme
+                onDelete = viewModel::deleteFilme,
+                onEditFilme = {
+                    viewModel.onEditFilme(
+                        filme = filme,
+                        navController = navController,
+                    )
+                },
+                modifier = modifier
             )
         }
     }
@@ -54,11 +63,15 @@ fun FilmeCard(
     modifier: Modifier = Modifier,
     filme: Filme,
     onDelete: (Filme) -> Unit = {},
+    onEditFilme: () -> Unit = {},
 ) {
     Card(
         modifier = modifier
             .fillMaxWidth()
             .padding(2.dp)
+            .clickable {
+                onEditFilme()
+            },
     ) {
         Row (
             verticalAlignment = Alignment.CenterVertically,
@@ -97,7 +110,7 @@ fun FilmeCard(
         }
     }
 }
-
+/*
 @Preview(showBackground = true)
 @Composable
 fun ListPreview() {
@@ -118,3 +131,4 @@ fun CardPreview() {
         )
     }
 }
+*/

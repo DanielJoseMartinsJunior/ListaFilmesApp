@@ -54,7 +54,7 @@ fun App(
         ) {
             composable(route = AppScreens.FilmeList.name) {
                 FilmeList(
-                    viewModel = viewModel,
+                    viewModel = viewModel, navController = navController,
                 )
             }
             composable(route = AppScreens.InsertFilme.name) {

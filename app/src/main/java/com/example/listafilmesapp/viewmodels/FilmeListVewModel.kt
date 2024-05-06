@@ -35,7 +35,7 @@ class FilmeListVewModel : ViewModel(){
     val appUIState: StateFlow<AppUIState> =
         _appUIState.asStateFlow()
 
-    private var filme: Filme = Filme()
+    private var filmeToEdit: Filme = Filme()
     private var editFilme: Boolean =  false
 
     fun navigate(navController: NavController) {
@@ -52,11 +52,21 @@ class FilmeListVewModel : ViewModel(){
             navController.navigate(AppScreens.InsertFilme.name)
 
         } else{
-
+            val filmes: MutableList<Filme> =
+                _filmeListUIState.value.filmeList.toMutableList()
             if(editFilme) {
+                val pos = filmes.indexOf(filmeToEdit)
+                filmes.removeAt(pos)
+                filmes.add(pos, Filme(
+                    _insertFilmeUIState.value.foto,
+                    _insertFilmeUIState.value.nome,
+                    _insertFilmeUIState.value.descricao,
+                ))
+
+                filmeToEdit = Filme()
+                editFilme = false
 
             } else {
-                val filmes: MutableList<Filme> = _filmeListUIState.value.filmeList.toMutableList()
                 filmes.add(
                     Filme(
                         foto = _insertFilmeUIState.value.foto,
@@ -64,15 +74,16 @@ class FilmeListVewModel : ViewModel(){
                         descricao = _insertFilmeUIState.value.descricao,
                     )
                 )
-                _insertFilmeUIState.update {
-                    InsertFormUIState()
-                }
-                _filmeListUIState.update { currentState ->
-                    currentState.copy(
-                        filmeList = filmes.toList()
-                    )
-                }
+            }
 
+            _filmeListUIState.update { currentState ->
+                currentState.copy(
+                    filmeList = filmes.toList()
+                )
+            }
+
+            _insertFilmeUIState.update {
+                InsertFormUIState()
             }
 
             _appUIState.update {
@@ -101,6 +112,31 @@ class FilmeListVewModel : ViewModel(){
         _filmeListUIState.value = _filmeListUIState.value.copy(
             filmeList = filmes.toList())
     }
+
+    fun onEditFilme(filme: Filme, navController: NavController) {
+        editFilme = true
+        filmeToEdit =  filme
+
+        _insertFilmeUIState.update { currentState ->
+            currentState.copy(
+                foto = filmeToEdit.foto,
+                nome = filmeToEdit.nome,
+                descricao = filmeToEdit.descricao,
+            )
+        }
+
+        _appUIState.update { currentState ->
+            currentState.copy(
+                title = R.string.editar_filme,
+                fabIcon = R.drawable.baseline_check_24,
+                iconContentDescription = R.string.confirm,
+            )
+        }
+
+        navController.navigate(route = AppScreens.InsertFilme.name)
+
+    }
+
 
     fun onFotoChange(@DrawableRes foto: Int) {
         _insertFilmeUIState.update { currentState ->
