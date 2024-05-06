@@ -34,6 +34,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.listafilmesapp.data.createFilmesList
 import com.example.listafilmesapp.models.Filme
 import com.example.listafilmesapp.ui.theme.ListaFilmesAppTheme
+import com.example.listafilmesapp.ui.views.App
 import com.example.listafilmesapp.ui.views.FilmeList
 import com.example.listafilmesapp.viewmodels.FilmeListVewModel
 
@@ -47,15 +48,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    FilmesApp()
+                    App()
                 }
             }
         }
     }
-}
-
-@Composable
-fun FilmesApp() {
-    val viewModel: FilmeListVewModel = viewModel()
-    FilmeList(viewModel = viewModel)
 }

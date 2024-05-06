@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">ListaFilmesApp</string>
+    <string name="lista_de_filmes">Lista de Filmes</string>
+    <string name="insira_um_novo_filme">Insira um novo filme</string>
+    <string name="confirm">Confirme</string>
 </resources>
