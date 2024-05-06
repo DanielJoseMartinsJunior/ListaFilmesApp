@@ -19,16 +19,22 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.listafilmesapp.viewmodels.FilmeListVewModel
 
+//Este arquivo define a estrutura principal do aplicativo e a navegação entre as diferentes telas.
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun App(
     modifier: Modifier = Modifier
 ) {
     val viewModel: FilmeListVewModel = viewModel()
+
+    // Cria um NavController para lidar com a navegação entre as telas
     val navController = rememberNavController()
 
+    // Coleta o estado da UI do ViewModel
     val uiState by viewModel.appUIState.collectAsState()
 
+    // Define a estrutura básica do aplicativo
     Scaffold(
         topBar = {
             TopAppBar(title = {
@@ -47,6 +53,7 @@ fun App(
             }
         }
     ) {
+        // Define o NavHost para controlar a navegação entre as telas
         NavHost(
             navController = navController,
             startDestination = AppScreens.FilmeList.name,

@@ -3,7 +3,12 @@ package com.example.listafilmesapp.data
 import com.example.listafilmesapp.models.Filme
 import com.example.listafilmesapp.R
 
+// Este arquivo é usado para criar uma lista inicial de filmes para o aplicativo
+
+// Esta função cria uma lista de filmes. Cada filme é criado com uma foto, um nome e uma descrição.
 fun createFilmesList(): List<Filme> {
+
+    // Lista de fotos para os filmes
     val fotos = listOf(
         R.drawable.acao,
         R.drawable.ficcao_cientifica,
@@ -11,6 +16,7 @@ fun createFilmesList(): List<Filme> {
         R.drawable.suspense
     )
 
+    // Lista de nomes e descrições para os filmes
     val caracteres = listOf(
         "Velozes e Furiosos" to "Corridas ilegais de carros.",
         "Interstellar" to "Viagem interdimensional.",
@@ -69,7 +75,7 @@ fun createFilmesList(): List<Filme> {
         "Romeu + Julieta" to "Amor trágico em cenário moderno.",
     )
 
-
+    // Cria a lista de filmes
     val filmes = caracteres.mapIndexed { index, (nome, descricao) ->
         Filme(
             foto = fotos[index % fotos.size],
@@ -77,5 +83,6 @@ fun createFilmesList(): List<Filme> {
             descricao = descricao
         )
     }
+
     return filmes
 }

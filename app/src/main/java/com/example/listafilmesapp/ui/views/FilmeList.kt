@@ -32,6 +32,9 @@ import com.example.listafilmesapp.models.Filme
 import com.example.listafilmesapp.ui.theme.ListaFilmesAppTheme
 import com.example.listafilmesapp.viewmodels.FilmeListVewModel
 
+// Este arquivo é responsável por definir a interface do usuário (UI) para a lista de filmes e o card de filme
+
+// Componente que exibe a lista de filmes
 @Composable
 fun FilmeList(
     viewModel: FilmeListVewModel,
@@ -39,13 +42,16 @@ fun FilmeList(
     modifier: Modifier = Modifier,
 ) {
 
+    // Coleta o estado da lista de filmes do ViewModel
     val uiState by viewModel.filmeListUIState.collectAsState()
 
+    // Exibe a lista de filmes em uma coluna preguiçosa
     LazyColumn{
         items(uiState.filmeList){ filme ->
             FilmeCard(
                 filme = filme,
-                onDelete = viewModel::deleteFilme,
+                onDelete = viewModel::deleteFilme, // Função para deletar o filme
+                // Função para editar o filme
                 onEditFilme = {
                     viewModel.onEditFilme(
                         filme = filme,
@@ -58,6 +64,7 @@ fun FilmeList(
     }
 }
 
+// Componente que exibe um único filme em um cartão
 @Composable
 fun FilmeCard(
     modifier: Modifier = Modifier,
@@ -70,6 +77,7 @@ fun FilmeCard(
             .fillMaxWidth()
             .padding(2.dp)
             .clickable {
+                // Quando o cartão é clicado, a função de edição do filme é chamada
                 onEditFilme()
             },
     ) {

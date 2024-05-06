@@ -31,15 +31,20 @@ import androidx.navigation.NavController
 import com.example.listafilmesapp.R
 import com.example.listafilmesapp.viewmodels.FilmeListVewModel
 
+// Este arquivo é responsável por definir a interface do usuário (UI) para a inserção de um novo filme
+
 @Composable
 fun InsertFilme(
-    viewModel: FilmeListVewModel,
+    viewModel: FilmeListVewModel, //ViewModel que contém a lógica de negócios
     navController: NavController
 ) {
+    // Manipula o evento de pressionar o botão de voltar
     BackHandler {
         viewModel.navigateBack(navController)
     }
+    // Coleta o estado do formulário de inserção do ViewModel
     val uiState by viewModel.insertFilmeUIState.collectAsState()
+    // Exibe o formulário de inserção
     InsertForm(
         foto = uiState.foto,
         nome = uiState.nome,
@@ -74,10 +79,12 @@ fun InsertForm(
             .padding(12.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        // Exibe as imagens disponíveis em uma grade vertical preguiçosa
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
             modifier = modifier.fillMaxWidth()
         ) {
+            // Para cada imagem na lista, exibe a imagem em uma caixa
             items(imageList) { image ->
                 Box(
                     modifier = modifier
