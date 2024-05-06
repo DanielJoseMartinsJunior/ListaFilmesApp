@@ -1,4 +1,4 @@
-package com.example.listafilmesapp
+package com.example.listafilmesapp.models
 
 import androidx.annotation.DrawableRes
 
