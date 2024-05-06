@@ -42,6 +42,7 @@ fun createFilmesList(): List<Filme> {
         "Avatar" to "Conflito em planeta alienígena.",
         "Antes do Amanhecer" to "Romance em uma noite em Viena.",
         "Zodíaco" to "Busca por serial killer.",
+        /*
         "Os Vingadores" to "Super-heróis salvam o mundo.",
         "Ex Machina" to "IA passa no teste de Turing.",
         "Casablanca" to "Amor e sacrifício durante a guerra.",
@@ -73,6 +74,8 @@ fun createFilmesList(): List<Filme> {
         "Vingadores: Guerra Infinita" to "Super-heróis contra Thanos.",
         "Matrix" to "Realidade é uma simulação.",
         "Romeu + Julieta" to "Amor trágico em cenário moderno.",
+        */
+
     )
 
     // Cria a lista de filmes
